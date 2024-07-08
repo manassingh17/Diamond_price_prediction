@@ -1,21 +1,13 @@
+# Basic Import
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression, Ridge,Lasso,ElasticNet
 from sklearn.tree import DecisionTreeRegressor
 from src.exception import CustomException
 from src.logger import logging
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.tree import DecisionTreeRegressor
-from xgboost import XGBRegressor
-
-from sklearn.ensemble import (
-    AdaBoostRegressor,
-    GradientBoostingRegressor,
-    RandomForestRegressor
-)
 
 from src.utils import save_object
-from src.utils import evaluate_models
+from src.utils import evaluate_model
 
 from dataclasses import dataclass
 import sys
@@ -41,18 +33,14 @@ class ModelTrainer:
             )
 
             models={
-                "Random Forest":RandomForestRegressor(),
-                "Decision Tree":DecisionTreeRegressor(),
-                "Gradient Boosting":GradientBoostingRegressor(),
-                "Linear Regression":LinearRegression(),
-                "K-Neighbour Regressor":KNeighborsRegressor(),
-                "XGBRegressor":XGBRegressor(),
-                
-                "AdaBoost Regressor":AdaBoostRegressor()
-            }
-          
+            'LinearRegression':LinearRegression(),
+            'Lasso':Lasso(),
+            'Ridge':Ridge(),
+            'Elasticnet':ElasticNet(),
+            'DecisionTree':DecisionTreeRegressor()
+        }
             
-            model_report:dict=evaluate_models(X_train,y_train,X_test,y_test,models)
+            model_report:dict=evaluate_model(X_train,y_train,X_test,y_test,models)
             print(model_report)
             print('\n====================================================================================\n')
             logging.info(f'Model Report : {model_report}')
